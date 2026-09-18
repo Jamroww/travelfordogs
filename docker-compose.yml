@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: dog_dispatch_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: dog_dispatch
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      
+volumes:
+  pg_data:
