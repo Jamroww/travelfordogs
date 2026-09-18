@@ -26,3 +26,13 @@ class Driver(Base):
     is_online = Column(Boolean, default=False)
     # SRID 4326 enforces standard WGS 84 longitude/latitude coordinates
     current_location = Column(Geometry(geometry_type='POINT', srid=4326))
+
+class Trip(Base):
+    __tablename__ = "trips"
+    id = Column(Integer, primary_key=True, index=True)
+    dog_name = Column(String(50), nullable=False)
+    pickup_lon = Column(Numeric(9, 6))
+    pickup_lat = Column(Numeric(9, 6))
+    driver_id = Column(Integer, ForeignKey("drivers.id"))
+    status = Column(String(20), default="requested") # requested, accepted, in_progress, completed
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
